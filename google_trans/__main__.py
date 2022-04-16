@@ -1,4 +1,5 @@
 import requests
+from google_trans.const import DEFAULT_USER_AGENT, LANGUAGES
 
 
 class Translator:
@@ -6,7 +7,7 @@ class Translator:
     def __init__(self):
         self.url = 'https://translate.google.com/'
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
+            'User-Agent': DEFAULT_USER_AGENT
         }
 
     def translate(self, text: str, source_lang='auto', target_lang='uz'):
@@ -30,3 +31,10 @@ class Translator:
                 self.url + f"translate_a/single?client=gtx&sl=auto&tl={target_lang}&dt=t&q={text}", params=params, headers=self.headers).json()[0][0][0]
         else:
             return requests.get(url=self.url + f"translate_a/single?client=gtx&sl={source_lang}&tl={target_lang}&dt=t&q={text}", params=params, headers=self.headers).json()[0][0][0]
+
+    def languages(self):
+        """
+        Get all available languages
+        :return: list of languages
+        """
+        return LANGUAGES
